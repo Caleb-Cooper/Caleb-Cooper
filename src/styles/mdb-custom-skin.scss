@@ -1,0 +1,28 @@
+$skins: () !default;
+$skins: map-merge((
+  "bex": (
+    "skin-primary-color":      #CC092F, 
+    "skin-navbar":             #fff,
+    "skin-footer-color":       #fff,
+    "skin-flat":               #1B232A,
+    "skin-accent":             #CC092F,   
+    "skin-sidenav-item":       #1B232A,   
+    "skin-sidenav-item-hover": #1B232A,
+    "skin-gradient-start":     #fff,
+    "skin-gradient-end":       #fff,
+    "skin-mask-slight":        #fff,
+    "skin-mask-light":         #fff,
+    "skin-mask-strong":        #fff,
+    "skin-sn-child":           #fff,
+    "skin-btn-primary":        #CC092F,
+    "skin-btn-secondary":      #e0e0e0,
+    "skin-btn-default":        #CC092F,
+    "skin-text":               #fff,
+  )
+), $skins);
+
+@import "~ng-uikit-pro-standard/assets/scss/core/mixins";
+@import "~ng-uikit-pro-standard/assets/scss/core/colors";
+@import "~ng-uikit-pro-standard/assets/scss/core/variables";
+@import "~ng-uikit-pro-standard/assets/scss/core/variables-pro";
+@import "~ng-uikit-pro-standard/assets/scss/core/msc/skins-pro";

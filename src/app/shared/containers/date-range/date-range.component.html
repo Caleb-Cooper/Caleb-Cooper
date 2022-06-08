@@ -1,0 +1,29 @@
+  <div [mdbPopover]="rangePopoverTemplate" #rangePopover="bs-mdbPopover" [ngClass] = "dateRangeStyle" [placement]="popoverPlacement" mdbWavesEffect triggers="click" outsideClick="true" (click)="showRangePicker()"><fa-icon [icon]="['fas','calendar']" class="pr-2 text-muted"></fa-icon>{{ dateRangeLabel }} 
+    <ng-template #rangePopoverTemplate>
+      <div class="d-flex flex-row" [ngClass]="{'date-range-template': calendarVisible}">
+        <div class="flex-column" [hidden]="!calendarVisible">
+          <app-modal-calendar 
+            [calendarOptions]="modalCalendarOptions"
+            (dateRangeChange)="onDateRangeChange($event)"
+            >
+          </app-modal-calendar>
+        </div>
+        <div class="d-flex flex-column">
+          <button mdbBtn class="btn btn-light btn-range-picker" mdbWavesEffect (click)="rangeSelected(rangePopover, dateFilterRange.Today)">{{dateFilterRange.Today}}</button>     
+          <button mdbBtn class="btn btn-light btn-range-picker" mdbWavesEffect (click)="rangeSelected(rangePopover, dateFilterRange.Yesterday)">{{dateFilterRange.Yesterday}}</button>                    
+          <button mdbBtn class="btn btn-light btn-range-picker" mdbWavesEffect (click)="rangeSelected(rangePopover, dateFilterRange.SevenDays)">{{dateFilterRange.SevenDays}}</button>       
+          <button mdbBtn class="btn btn-light btn-range-picker" mdbWavesEffect (click)="rangeSelected(rangePopover, dateFilterRange.ThirtyDays)">{{dateFilterRange.ThirtyDays}}</button>      
+          <button mdbBtn class="btn btn-light btn-range-picker" mdbWavesEffect (click)="rangeSelected(rangePopover, dateFilterRange.ThisMonth)">{{dateFilterRange.ThisMonth}}</button>             
+          <button mdbBtn *ngIf="!calendarVisible" class="btn btn-light btn-range-picker" mdbWavesEffect (click)="rangeSelected(rangePopover, dateFilterRange.CustomRange)"><fa-icon [icon]="['fas','cog']" class="pr-2"></fa-icon>{{dateFilterRange.CustomRange}}</button>
+          <div class="apply-button-container" *ngIf="calendarVisible">
+              <button mdbBtn [disabled]="!selectedDateRange" class="btn btn-primary btn-range-picker btn-apply" mdbWavesEffect (click)="rangeSelected(rangePopover, dateFilterRange.CustomRangeApply)"><fa-icon [icon]="['fas','check']" class="pr-2"></fa-icon>{{dateFilterRange.CustomRangeApply}}</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>     
+    <div class="float-right pr-3">                 
+      <span (click)="onDateRangeClear($event)" *ngIf="clearButtonVisible">
+        <span class="clear-date-icon ng-clear"></span>
+      </span>
+    </div>  
+  </div>

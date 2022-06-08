@@ -1,0 +1,75 @@
+<div id="topbar" [attr.data-sidebartype]="menuState">
+  <header class="topbar">
+    <nav class="navbar top-navbar navbar-expand-md navbar-light">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <div class="logo-icon pl-2" (mouseover)="hoverOnMenu()" (mouseout)="hoverOffMenu()">
+                    <img src="/assets/Images/logo-icon.png"/>
+                </div>
+                <div class="logo-text">
+                    <img src="/assets/Images/logo-text.png" />  
+                </div>
+            </a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="navbar-nav float-left mr-auto">
+                <li class="nav-item d-none d-md-block"><a class="nav-link" (click)="toggleMenu()">
+                  <span class="sidebar-dark-icon pl-2 pr-2"><fa-icon [icon]="['fas','bars']"></fa-icon></span></a>
+                </li>
+            </ul>
+            <ul class="navbar-nav float-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href=""> 
+                      <span class="sidebar-dark-icon"><fa-icon [icon]="['fas','bell']"></fa-icon></span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href=""> 
+                      <span class="sidebar-dark-icon"><fa-icon [icon]="['fas','cog']"></fa-icon></span>
+                    </a>
+                </li>               
+                <li class="nav-item dropdown btn-group" mdbDropdown>
+                    <a mdbDropdownToggle class="nav-link dropdown-toggle user-text">
+                      <img src="/assets/Images/d3.jpg" alt="user" class="rounded-circle" width="31">
+                      <span class="pl-2 pr-2">John Smith</span><span><fa-icon [icon]="['fas','chevron-down']"></fa-icon></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-primary user-dropdown-alignment">
+                      <a class="dropdown-item" href="#"><fa-icon [icon]="['fas', 'user']" class="action-menu-icon"></fa-icon>My Account</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#"><fa-icon [icon]="['fas', 'sign-out-alt']" class="action-menu-icon"></fa-icon>Log Out</a>
+                  </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+  </header>
+</div>
+
+<div id="sidebar" [attr.data-sidebartype]="menuState" (mouseover)="hoverOnMenu()" (mouseout)="hoverOffMenu()">
+  <aside class="left-sidebar">
+    <div>
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="sidebar-item"> 
+                  <a class="sidebar-link sidebar-link" routerLink="/template/example-input/input" routerLinkActive="active" (click) = 'navigateTo(["/template/example-input/input"])'>
+                    <span class="sidebar-nav-icon"><fa-icon [icon]="['fas','home']"></fa-icon></span>
+                    <span class="hide-menu">Input</span>
+                  </a>
+                </li>
+                <li class="sidebar-item"> 
+                  <a class="sidebar-link sidebar-link" routerLink="/template/example-view/view" routerLinkActive="active" (click) = 'navigateTo(["/template/example-view/view"])'>
+                    <span class="sidebar-nav-icon"><fa-icon [icon]="['fas','user-circle']"></fa-icon></span>
+                    <span class="hide-menu">View</span>
+                  </a>
+                </li>
+                <li class="sidebar-item"> 
+                  <a class="sidebar-link" routerLink="/template/example-list/list" routerLinkActive="active" (click) = 'navigateTo(["/template/example-list/list"])'>
+                    <span class="sidebar-nav-icon"><fa-icon [icon]="['fas','list']"></fa-icon></span>
+                    <span class="hide-menu">List</span>
+                  </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+  </aside>
+</div>

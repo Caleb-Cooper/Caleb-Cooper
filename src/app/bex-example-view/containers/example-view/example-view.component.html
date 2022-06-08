@@ -1,0 +1,67 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <div class="page-heading">Example View Component</div>
+        </div>
+        <div class="col-6">
+            <div class="breadcrumb-container float-right">
+                <a class="breadcrumb-item" href={{backToListLink}} (click)="backToList($event)">
+                    Level 1
+                  </a>
+                <span class="breadcrumb-item breadcrumb-item-active">
+                    Level 2
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="content-card">
+        <div class="content-container">
+            <form [formGroup]="viewForm" novalidate>
+                <div class="form-group">
+                    <div class="md-form">
+                        <input mdbInput mdbValidate type="text" formControlName="userName" class="form-control" placeholder="Enter your name" id="testName">
+                        <label for="userName">Input field</label>
+                    </div>
+                    <div>
+                        <mdb-checkbox formControlName="checked">Checkbox</mdb-checkbox>
+                    </div> 
+                    <div class="switch bex-switch pt-4">
+                        <label class="small text-uppercase">
+                            <input type="checkbox" formControlName="switchExample" class="form-control" id="switchExample">
+                            <span class="lever"></span>
+                        </label>
+                        <label for="switchExample" class="form-label">Switch</label>
+                    </div>
+                    <div class="md-form">
+                        <mdb-select [options]="optionsSelect" name="options" placeholder="Choose an option" formControlName="options"></mdb-select>
+                        <label for="options">Simple dropdown</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="ngSelect">ng-select</label>
+                        <ng-select
+                            [items]="people$ | async"
+                            [multiple]=true
+                            [hideSelected]=true
+                            [searchable]=true
+                            [selectOnTab]=true
+                            [clearSearchOnAdd]=true
+                            labelForId="ngSelect"
+                            bindLabel="name"
+                            [readonly]=true
+                            placeholder="Select people"
+                            formControlName="ngSelect"
+                        >
+                        </ng-select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Text area:</label>  
+                        <textarea mdbInput mdbValidate formControlName="message" class="form-control rounded-0" id="testMessage"
+                        rows="3" placeholder="Message"></textarea>
+                    </div>
+                </div>
+            </form>        
+        <button mdbBtn type="button" color="primary" mdbWavesEffect disabled>Submit (disabled) (primary color)</button>
+        <button mdbBtn type="button" color="secondary" mdbWavesEffect disabled>Cancel (disabled) (secondary color)</button>
+        </div>
+    </div>
+</div>

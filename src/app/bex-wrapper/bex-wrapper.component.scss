@@ -1,0 +1,20 @@
+#main-content {
+    left: 250px;
+    width: calc(100% - 250px);
+    height: 100%;
+    min-height: 100%;
+    position: relative;
+    z-index: 2;
+    transition: all 0.4s ease;
+}
+
+.content {
+    padding: 0px 10px;
+}
+
+ 
+@media print {
+    app-bex-nav, app-bex-footer {
+        display: none;
+    }
+}

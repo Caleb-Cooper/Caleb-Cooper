@@ -1,0 +1,30 @@
+<div class="modal-content" [ngClass]="{'single':baseCalendarOptions.singleCalendar}">  
+  <div class="bex-calendar-header-day">{{selection.endDate | date:'yyyy'}}</div>
+  <div class="bex-calendar-header-date">{{selection.startDate | date:'d MMMM' }}<span *ngIf="!baseCalendarOptions.singleCalendar"> - {{selection.endDate | date:'d MMM'}}</span></div>
+  
+  <div class="modal-body">      
+    <ngx-daterangepicker-material #DaterangepickerComponent
+    (choosedDate)="choosedDate($event)" 
+    [locale]="baseCalendarOptions.locale"
+    [linkedCalendars]="baseCalendarOptions.linkedCalendars"
+    [autoApply]="baseCalendarOptions.autoApply"    
+    [singleDatePicker]="baseCalendarOptions.singleCalendar"
+    >
+    
+  </ngx-daterangepicker-material>
+  <div *ngIf="baseCalendarOptions.timePicker" class="container-fluid">
+    <div class="row">
+        <div class="col"><mdb-time-picker [buttonLabel]="'Done'" [twelvehour]="true" [darktheme]="true" [placeholder]="'Selected time'" [label]="'Start Time'" [(ngModel)]="startTime" value="startTime" (ngModelChange)="validateTime()"></mdb-time-picker></div>
+        <div class="col"><mdb-time-picker [buttonLabel]="'Done'" [twelvehour]="true" [darktheme]="true" [placeholder]="'Selected time'" [label]="'End Time'" [(ngModel)]="endTime"(ngModelChange)="validateTime()"></mdb-time-picker></div>
+    </div>
+  </div>
+    
+  </div>
+  <div *ngFor="let error of errors;" class="modal-error">
+    {{error}}
+  </div>
+  <div *ngIf="baseCalendarOptions.showButtons" class="modal-footer">    
+    <button mdbBtn type="button" color="light" class="relative waves-light" (click)="onCancelClick()" mdbWavesEffect>Cancel</button>
+    <button mdbBtn type="button" color="primary" class="relative waves-light" [disabled] = "errors.length > 0" (click)="onConfirmClick()" mdbWavesEffect><fa-icon [icon]="['fas','check']" class="pr-2"></fa-icon>{{baseCalendarOptions.applyLabel}}</button>
+  </div>
+</div>

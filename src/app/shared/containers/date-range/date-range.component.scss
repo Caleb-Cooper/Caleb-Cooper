@@ -1,0 +1,62 @@
+.apply-button-container {
+    position: absolute;
+    bottom: 0px !important;
+    padding-bottom: 10px;
+}
+
+.btn-apply {
+    width: 148px !important;
+}
+
+.btn-range-picker {
+    box-shadow: none !important;
+}
+
+.clear-date-icon {
+    font-size: 18px;
+    font-weight: 400;
+    color: #999999 !important;
+    padding: 0px 0px 5px 0px;
+    line-height: 20px;
+}
+
+.clear-date-icon::after {
+    content: "\00d7";
+}
+
+.clear-date-icon:hover {
+    color: #CC092F !important;
+}
+
+::ng-deep .modal-content {
+    width: auto!important;
+    position: relative!important;
+    border: 0px;
+}
+
+::ng-deep .modal-body {
+    padding-left: 0% !important;
+    padding-right: 0% !important;
+}
+
+::ng-deep .popover-right {
+    top: 25px !important;
+}
+
+::ng-deep .popover.popover-right::before {
+    margin-top: -35px !important;
+}
+
+::ng-deep .popover.popover-right::after {
+    margin-top: -34px !important;
+}
+
+::ng-deep .popover.popover-bottom::before {
+    left: auto !important;
+    right: 100px !important;
+}
+
+::ng-deep .popover.popover-bottom::after {
+    left: auto !important;
+    right: 101px !important;
+}

@@ -1,0 +1,239 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+        <div class="page-heading">Example List Component</div>
+    </div>
+    <div class="col-6">
+      <div class="breadcrumb-container float-right">
+        <a class="breadcrumb-item" href={{backToListLink}} (click)="backToList($event)">
+          Level 1
+        </a>
+        <span class="breadcrumb-item breadcrumb-item-active">
+          Level 2
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="content-card">
+    <div class="content-container">
+      <div class="row">
+        <div class="col-3">
+          <div class="md-form search-container mt-2">
+            <input type="text" class="form-control w-75" id="search" mdbInput #textSearch>
+            <label for="search">Search</label>
+            <a class="fix-search-clear-icon" *ngIf="showClearSearch" (click)="clearSearch()"><fa-icon [icon]="['fas','times']" class="pr-2" ></fa-icon></a> 
+          </div>
+        </div>
+        <div class="col-9">
+          <div class="float-right">
+            <div class="btn-group" role="group">
+              <button mdbBtn type="button" color="primary" class="custom-action-button-group waves-light mt-2" mdbWavesEffect><fa-icon [icon]="['fas','plus']" class="pr-2"></fa-icon>New Message</button>
+              <div *ngIf="selectedMessages && selectedMessages.length > 0">
+                <div class="btn-group" mdbDropdown>
+                  <button mdbBtn mdbDropdownToggle type="button" color="primary" class="dropdown-toggle waves-light mt-2 text-uppercase custom-action-button-group" mdbWavesEffect><fa-icon [icon]="['fas', 'bolt']" class="pr-2"></fa-icon>Actions On Selected</button>
+                    <div class="dropdown-menu dropdown-primary">
+                      <a class="dropdown-item"><fa-icon [icon]="['fas','print']" class="action-menu-icon pr-2"></fa-icon>Print Selected</a>
+                      <a class="dropdown-item"><fa-icon [icon]="['fas','download']" class="action-menu-icon pr-2"></fa-icon>Export</a>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="btn-group" role="group">
+              <button mdbBtn type="button" color="light" class="custom-tool-button-group waves-light mt-2" (click)="toggleFilters()"  mdbTooltip="Show / Hide Filters" placement="top" mdbWavesEffect>
+                <fa-icon [icon]="['fas','filter']" [ngClass]="{'c-primary': listFiltersVisible}"></fa-icon>
+              </button>
+              <button mdbBtn type="button" color="light" class="custom-tool-button-group waves-light mt-2" (click)="reLoadData()" mdbTooltip="Reload Data" placement="top" mdbWavesEffect>
+                <fa-icon [icon]="['fas','sync-alt']"></fa-icon>
+              </button>
+              <div class="btn-group" mdbDropdown>
+                <button mdbBtn mdbDropdownToggle type="button" color="light" class="dropdown-toggle waves-light mt-2 text-uppercase custom-tool-button-group" mdbWavesEffect><fa-icon [icon]="['fas', 'wrench']" class="pr-2"></fa-icon></button>
+                  <div class="dropdown-menu dropdown-primary dropdown-menu-right">
+                    <a class="dropdown-item" (click)="openShowHideColumnsModal()"><fa-icon [icon]="['fas','table']" class="action-menu-icon pr-2"></fa-icon>Show / Hide Columns</a>
+                  </div>
+              </div>
+              <div class="btn-group" mdbDropdown>
+                <button mdbBtn mdbDropdownToggle type="button" color="light" class="dropdown-toggle waves-light mt-2 text-uppercase custom-tool-button-group" mdbTooltip="Change Views" mdbWavesEffect><fa-icon [icon]="['fas', 'window-restore']" class="pr-2"></fa-icon></button>
+                <div class="dropdown-menu dropdown-primary dropdown-menu-right">
+                    <ng-container *ngFor="let view of views; let i = index">
+                      <a class="dropdown-item" [ngClass]="{'active-dropdown-item' : view.viewName === activeView?.viewName}" (click)="setView(view)"><fa-icon [icon]="['fas','table']" class="pr-3"></fa-icon>{{view?.viewName}}</a>
+                    </ng-container>
+                </div>
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="float-right">
+            <div class="pt-3 text-center text-medium">Viewing
+              <strong class="c-primary">{{ filterStatusLabel }}</strong> elements for 
+              <app-date-range
+                  [dateRangeSelection]=selectedDateRange
+                  [dateRangeStyle]="'text-center my-2 table-date-range-picker'"
+                  [dateRangeBlankLabel]="'Select start date range'"
+                  [popoverPlacement]="'bottom'"
+                  (dateRangeSelected)="onDateRangeChange($event)" 
+                  (dateRangeCleared)="onDateRangeCleared()">
+              </app-date-range>    
+              </div>     
+            </div> 
+        </div>
+      </div>
+      <div [hidden] = "!messageList || !messageList.messages || messageList.messages.length == 0">
+        <table mdbTable class="table table-hover table-responsive-md table-padding mb-0">
+                
+                <thead>
+                  <tr>
+                    <th class="pt-4">
+                      <div class="add-checkbox-padding">
+                        <mdb-checkbox [filledIn]="true" [checked]="selectedMessages.length > 0 && selectedMessages.length == messageList.messages.length" (change)="selectAll($event);"></mdb-checkbox>
+                      </div>
+                    </th>  
+                    <th 
+                      *ngFor="let tHeader of activeView?.columns; let i = index" [hidden]="!tHeader.show" (click)="onTableColumnHeaderClick(tHeader)"><span class="font-weight-bold pr-2">{{tHeader.title}}</span>
+                        <span *ngIf = "tHeader.sortOrder == sortOrder.Asc" class="small pr-2"><fa-icon [icon]="['fas','long-arrow-alt-up']"></fa-icon></span>
+                        <span *ngIf = "tHeader.sortOrder == sortOrder.Desc" class="small pr-2"><fa-icon [icon]="['fas','long-arrow-alt-down']"></fa-icon></span>
+                    </th>
+                    <th class="text-center">
+                      <span class="font-weight-bold">Actions</span>
+                    </th>
+                  </tr>
+                  <tr class="" *ngIf="listFiltersVisible">
+                    <th></th>
+                    <th [hidden]="!activeView?.columns[0]?.show">
+                      <ng-select
+                          [items]="ids"
+                          placeholder="Search"
+                          [multiple]=true
+                          [hideSelected]=true
+                          [searchable]=true
+                          [selectOnTab]=true
+                          [clearSearchOnAdd]=true
+                          [(ngModel)]="messageFilter.ids"
+                          (change)="onApplyFilters()">
+                    </ng-select>
+                  </th>
+                  <th [hidden]="!activeView?.columns[1]?.show">
+                    <ng-select
+                        [items]="firstNames"
+                        placeholder="Search"
+                        [multiple]=true
+                        [hideSelected]=true
+                        [searchable]=true
+                        [selectOnTab]=true
+                        [clearSearchOnAdd]=true
+                        [(ngModel)]="messageFilter.firstNames"
+                        (change)="onApplyFilters()">
+                    </ng-select>
+                  </th>
+                  <th [hidden]="!activeView?.columns[2]?.show">
+                    <ng-select
+                        [items]="lastNames"
+                        placeholder="Search"
+                        [multiple]=true
+                        [hideSelected]=true
+                        [searchable]=true
+                        [selectOnTab]=true
+                        [clearSearchOnAdd]=true
+                        [(ngModel)]="messageFilter.LastNames"
+                        (change)="onApplyFilters()">
+                    </ng-select>
+                  </th>
+                  <th [hidden]="!activeView?.columns[3]?.show">
+                    <ng-select
+                        [items]="messages"
+                        placeholder="Search"
+                        [multiple]=true
+                        [hideSelected]=true
+                        [searchable]=true
+                        [selectOnTab]=true
+                        [clearSearchOnAdd]=true
+                        [(ngModel)]="messageFilter.messages"
+                        (change)="onApplyFilters()">
+                    </ng-select>
+                  </th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody ngxUiLoaderBlurred blur="0" [loaderId]="'list-table'" >
+                  <tr *ngFor="let el of messageList?.messages; let i = index">
+                    <td>
+                      <div class="add-checkbox-padding">
+                        <mdb-checkbox [filledIn]="true" [checked]="isSelected(el)" (change)="selectRow($event,el);"></mdb-checkbox>
+                      </div>
+                    </td>
+                    <th [hidden]="!activeView?.columns[0]?.show" px-3  scope="row">{{el.id}}</th>
+                    <td [hidden]="!activeView?.columns[1]?.show">{{el.first}}</td>
+                    <td [hidden]="!activeView?.columns[2]?.show">{{el.last}}</td>
+                    <td [hidden]="!activeView?.columns[3]?.show">{{el.message}}</td>
+                    <td class="text-center">
+                      <span class="pr-4 row-action-button"><a mdbTooltip="Edit" (click)="editMessage(el.id)"><fa-icon [icon]="['fas','pen']"></fa-icon></a></span>
+                      <span class="pr-4 row-action-button"><a mdbTooltip="Delete" (click)="deleteMessage(el.id)"><fa-icon [icon]="['fas','trash']"></fa-icon></a></span>
+                      <div class="btn-group" mdbDropdown>
+                        <button mdbBtn mdbDropdownToggle type="button" class="row-action-button show-more-button"><fa-icon [icon]="['fas','ellipsis-h']"></fa-icon></button>
+                          <div class="dropdown-menu dropdown-primary row-action-dropdown">
+                            <span class="dropdown-arrow arrow-placement"></span>
+                            <span class="dropdown-arrow-fill arrow-placement-fill"></span>
+                            <a class="dropdown-item"><fa-icon [icon]="['fas','cog']" class="action-menu-icon pr-2"></fa-icon>Action 1</a>
+                            <a class="dropdown-item"><fa-icon [icon]="['fas','print']" class="action-menu-icon pr-2"></fa-icon>Action 2</a>
+                          </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <ngx-ui-loader *ngIf="listLoading" [loaderId]="'list-table'"></ngx-ui-loader>
+                </tbody>
+                <tfoot class="grey lighten-5 w-100 footer-border">
+                  <tr>
+                    <td colspan="2">
+                        <div class="d-inline-flex"><span class="pt-2">Show</span> <mdb-select [(ngModel)]="messageFilter.pageSize" [options]="tablePageSizeOptions" (ngModelChange)="changePageSize()" placeholder="" class="mx-2 item-container"></mdb-select> <span class="pt-2">entries</span></div>
+                    </td>
+                    <td colspan="8">
+                      <div class="d-flex justify-content-end">
+                        <nav class="pt-1">
+                          <ul class="pagination mb-0 flex-wrap">
+                            <li class="page-item disabled" >
+                              <a class="page-link">
+                                  {{firstVisibleIndex}} - {{lastVisibleIndex}} of {{messageList.totalRecords}}
+                              </a>
+                            </li>
+                            <li *ngIf="messageList.totalRecords > 0" class="page-item" (click)="firstPage()" [ngClass]="{disabled: messageList.pageNumber <= 1}">
+                              <a class="page-link">First</a>
+                            </li>
+                            
+                            <li *ngIf="messageList.totalRecords > 0" class="page-item" (click)="previousPage()" [ngClass]="{disabled: messageList.pageNumber <= 1}">
+                              <a class="page-link">Previous</a>
+                            </li>
+        
+                            <li #pages *ngFor="let page of paginators | slice:firstVisiblePaginator:lastVisiblePaginator; let i = index" class="page-item"
+                              [ngClass]="{active: i + firstVisiblePaginator + 1 == messageList.pageNumber}">
+                              <a class="page-link waves-light" (click)="changePage($event)" mdbWavesEffect>{{page}}</a>
+                            </li>
+        
+                            <li *ngIf="messageList.totalRecords > 0" class="page-item" (click)="nextPage()" [ngClass]="{disabled: messageList.pageNumber >= messageList.totalPages}">
+                              <a class="page-link">Next</a>
+                            </li>
+        
+                            <li *ngIf="messageList.totalRecords > 0" class="page-item" (click)="lastPage()" [ngClass]="{disabled: messageList.pageNumber >= messageList.totalPages}">
+                              <a class="page-link">Last</a>
+                            </li>
+                          </ul>
+                        </nav>
+                      </div>                
+                    </td>
+                </tr>
+                </tfoot>
+        </table>
+      </div> 
+      <div *ngIf="!messageList || !messageList.messages || messageList.messages.length == 0" class="text-center">
+        <p class="text-center angular-title">
+            <fa-icon [icon]="['fas','file']" size="4x"></fa-icon>
+        </p>
+        <p class="text-center angular-title">Message list is empty</p>
+      </div>  
+     
+    </div>
+  </div>
+</div>
+
+

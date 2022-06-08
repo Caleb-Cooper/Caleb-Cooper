@@ -1,0 +1,5 @@
+  <app-bex-nav></app-bex-nav>
+  <div id="main-content" class="content" [@routeAnimations]="prepareRoute(outlet)" >
+      <router-outlet #outlet="outlet"></router-outlet>
+  </div>
+  <app-bex-footer></app-bex-footer>

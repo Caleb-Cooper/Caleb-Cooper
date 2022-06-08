@@ -1,0 +1,201 @@
+@import '../../styles/mdb-custom-variables.scss';
+@import '../../styles/bex-custom-variables.scss';
+
+/******* Topbar *******/
+.topbar {
+    position: relative;
+    z-index: 50;
+    -webkit-transition: 0.2s ease-in;
+    -o-transition: 0.2s ease-in;
+    transition: 0.2s ease-in;
+    -webkit-box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.05);
+    box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.05);
+    background: #fff;
+    height: $top-navbar-height; 
+}
+
+.topbar .top-navbar {
+    min-height: $top-navbar-height;
+    padding: 0px; 
+}
+
+.topbar .top-navbar .dropdown-toggle::after {
+    display: none; 
+}
+
+.topbar .top-navbar .navbar-header {
+    line-height: $top-navbar-height; 
+    transition: all 0.4s ease;
+}
+
+.topbar .top-navbar .navbar-header .navbar-brand {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin: 0px;
+    padding: 0 10px 0 10px; 
+}
+
+.topbar .top-navbar .navbar-header .navbar-brand .dark-logo {
+    display: none; 
+}
+          
+.topbar .top-navbar .navbar-header .navbar-brand .logo-icon {
+     margin-right: 5px; 
+}
+
+.topbar .top-navbar .navbar-nav > .nav-item > .nav-link {
+    padding: 0px 15px;
+    font-size: 0.875rem;
+    line-height: $top-navbar-height;
+    height: $top-navbar-height; 
+}
+      
+.topbar .top-navbar .navbar-nav > .nav-item {
+    -webkit-transition: 0.2s ease-in;
+    -o-transition: 0.2s ease-in;
+    transition: 0.2s ease-in; 
+}
+
+.topbar .top-navbar .navbar-nav > .nav-item:hover {
+    background: rgba(0, 0, 0, 0.05); 
+}
+
+.sidebar-dark-icon {
+    color: $secondary-color;
+    font-size: 15pt;
+}
+
+.navbar-brand {
+    display: inline-block;
+    padding-top: 0.33594rem;
+    padding-bottom: 0.33594rem;
+    margin-right: 1rem;
+    font-size: 1.09375rem;
+    line-height: inherit;
+    white-space: nowrap;
+    transition: all 0.4s ease;
+}
+
+.navbar-brand:hover, .navbar-brand:focus {
+    text-decoration: none; 
+}
+
+.topbar .top-navbar .navbar-header {
+    width: 250px;
+    background-color: $secondary-color;
+}
+
+.user-text {
+    color: $secondary-color !important;
+    font-weight: 500;
+}
+
+#topbar[data-sidebartype="full"] .logo-text {
+    visibility: visible;
+    opacity: 1;
+    transition: all .30s ease-out;
+}
+
+#topbar[data-sidebartype="slim"] .topbar .top-navbar .navbar-header {
+    width: 65px !important;
+    background-color: $secondary-color;
+}
+
+#topbar[data-sidebartype="slim"] .logo-text {
+    visibility: hidden;
+    opacity: 0;
+    transition: all .30s ease-out;
+}
+
+.user-dropdown-alignment {
+    top: 30px !important;
+ }
+
+/******* Sidebar *******/
+#sidebar[data-sidebartype="full"] .left-sidebar {
+    position: absolute;
+    width: 250px;
+    height: 100%;
+    top: 0px;
+    z-index: 10;
+    padding-top: $top-navbar-height;
+    background: $secondary-color;
+    -webkit-box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08); 
+    transition: all 0.4s ease;
+}
+
+#sidebar[data-sidebartype="slim"] .left-sidebar {
+    position: absolute;
+    width: 65px;
+    height: 100%;
+    top: 0px;
+    z-index: 10;
+    padding-top: $top-navbar-height;
+    background: $secondary-color;
+    -webkit-box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08); 
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+#sidebar[data-sidebartype="full"] .hide-menu {
+    visibility: visible;
+    opacity: 1;
+    transition: all .30s ease-out;
+}
+
+#sidebar[data-sidebartype="slim"] .hide-menu {
+    visibility: hidden;
+    opacity: 0;
+    transition: all .30s ease-out;
+}
+
+.sidebar-nav ul .sidebar-item .sidebar-link {
+    color: #fff;
+    font-weight: 400;
+    padding: 14px 6px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: block;
+    white-space: nowrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    line-height: 25px;
+}
+        
+.sidebar-nav-icon {
+    font-style: normal;
+    width: 50px;
+    line-height: 25px;
+    font-size: 23px;
+    color: #fff;
+    display: inline-block;
+    text-align: center; 
+}
+
+.sidebar-nav ul .sidebar-item .sidebar-link.active {
+    background-color: $primary-color;
+}
+
+.sidebar-link:hover {
+    background-color: #232C35 !important;
+}
+
+.sidebar-link.active:hover {
+    background-color: $primary-color !important;
+}
+
+.sidebar-nav ul {
+    margin: 0px;
+    padding: 0px; 
+}
+    
+.sidebar-nav ul li {
+    list-style: none; 
+}
